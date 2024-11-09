@@ -1,19 +1,21 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import Head from 'next/head';
-import GNB from './gnb';
+import { Box, BoxProps } from '@chakra-ui/react';
+import GNB from './GNB';
 
 interface Props {
   title: string;
   children: React.ReactNode;
 }
 
-export const ServiceLayout = function ({ title = 'poiu', children }: Props) {
+export const ServiceLayout: React.FC<Props & BoxProps> = function ({ title = 'poiu', children, ...boxProps }) {
   return (
-    <div>
+    <Box {...boxProps}>
       <Head>
         <title>{title}</title>
       </Head>
       <GNB />
       {children}
-    </div>
+    </Box>
   );
 };

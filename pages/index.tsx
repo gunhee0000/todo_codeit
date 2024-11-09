@@ -8,11 +8,11 @@ const IndexPage: NextPage = function () {
   const { signInWithGoogle, authUser } = useAuth();
   console.info(authUser);
   return (
-    <ServiceLayout title="test">
-      <Box maxW="md" mx="auto">
+    <ServiceLayout title="QnA" minH="100vh" backgroundColor="gray.50">
+      <Box maxW="md" mx="auto" pt="10">
         <img src="/main_logo.svg" alt="메인로고" />
         <Flex justifyContent="center">
-          <Heading>깃 업로드</Heading>
+          <Heading>깃 업로드 된 작업</Heading>
         </Flex>
       </Box>
       <Center mt="20px">
