@@ -5,7 +5,7 @@ interface Props {
   onClick: () => void;
 }
 
-export const GoogleLoginButton = function ({ onClick }: Props) {
+export const GoogleSigninButton = function ({ onClick }: Props) {
   const signInWithGoogleBtn = (
     <Button
       size="lg"
