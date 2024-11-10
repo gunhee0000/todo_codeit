@@ -33,7 +33,7 @@ export default class FirebaseAdmin {
 
     const config: Config = {
       credential: {
-        projectId: process.env.prejectId || '',
+        projectId: process.env.projectId || '',
         clientEmail: process.env.clientEmail || '',
         privateKey: (process.env.privateKey || '').replace(/\\n/g, '\n'),
       },
