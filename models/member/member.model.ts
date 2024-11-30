@@ -2,7 +2,7 @@ import FirebaseAdmin from '../firebase_admin';
 import { InAuthUser } from '../in_auth_user';
 
 const MEMBER_COL = 'members';
-const SCREENNAME_COL = 'screen_names';
+const SCR_NAME_COL = 'screen_names';
 
 type AddResult = { result: true; id: string } | { result: false; message: string };
 
@@ -52,8 +52,20 @@ async function add({ uid, email, displayName, photoURL }: InAuthUser): Promise<A
   }
 }
 
+async function findByScreenName(screenName: string): Promise<InAuthUser | null> {
+  const memberRef = FirebaseAdmin.getInstance().Firebase.collection(SCR_NAME_COL).doc(screenName);
+
+  const memberDoc = await memberRef.get();
+  if (memberDoc.exists === false) {
+    return null;
+  }
+  const data = memberDoc.data() as InAuthUser;
+  return data;
+}
+
 const memberModel = {
   add,
+  findByScreenName,
 };
 
 export default memberModel;
