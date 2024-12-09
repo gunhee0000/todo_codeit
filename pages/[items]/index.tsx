@@ -2,19 +2,17 @@ import { Box, Flex, Img, Spacer, Text } from '@chakra-ui/react';
 import { NextPage } from 'next';
 import { ServiceLayout } from '@/components/service_layout';
 import styles from '../../styles/details.module.css';
-import { TodoHeader } from '@/components/todoHeader';
-import { DoneHeader } from '@/components/doneHeader';
+import { DetailHeader } from '@/components/detailHeader';
 
 const Detail: NextPage = function () {
   return (
     <ServiceLayout title="detail">
       <Box className={styles.container}>
-        <TodoHeader />
+        <DetailHeader isCompleted={false} name="test" />
         <Box className={styles.contents}>
           <Flex>
             <Box className={styles.photo}>
               <Box className={styles.noneImg} />
-              {/* <Img src="/btn_add.png" alt="추가 버튼" /> */}
             </Box>
             <Spacer />
             <Box className={styles.memo}>
