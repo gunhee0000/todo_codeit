@@ -8,12 +8,16 @@
   padding-top: 20px;
 }
 
-
 .noneImg{
-box-sizing: border-box;
+box-sizing:border-box;
 width: 384px;
 height: 311px;
 background: #F8FAFC;
 border: 2px dashed #CBD5E1;
 border-radius: 24px;
+position: "relative";
+}
+
+.memo{
+  overflow:"auto"
 }

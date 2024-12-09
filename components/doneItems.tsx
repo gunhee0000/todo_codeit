@@ -2,12 +2,14 @@ import { Box, Button, Img } from '@chakra-ui/react';
 import axios, { AxiosResponse } from 'axios';
 import { NextPage } from 'next';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { items } from '@/models/items';
 import { DoneEmpty } from './doneEmpty';
 
 const TodoItems: NextPage = function () {
   const [todoItems, setTodoItems] = useState<items[]>([]); // 상태로 아이템 관리
   const tenantId = 'girin'; // tenantId 고정
+  const router = useRouter();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -45,6 +47,19 @@ const TodoItems: NextPage = function () {
     }
   };
 
+  const navToDetail = (item: items) => {
+    router.push({
+      pathname: `/${item.name}`,
+      query: {
+        id: item.id,
+        title: item.name,
+        contents: item.memo,
+        imgUrl: item.imageUrl,
+        isCompleted: item.isCompleted,
+      },
+    });
+  };
+
   if (todoItems.length === 0) {
     return <DoneEmpty />;
   }
@@ -69,7 +84,7 @@ const TodoItems: NextPage = function () {
           <Button bgColor="#DDD6FE" _hover={{ background: 'none' }} p="0" onClick={() => undo(item.id)}>
             <Img src={item.isCompleted ? '/icon_done.png' : '/icon_todo.png'} alt="아이콘" w="32px" h="32px" />
           </Button>
-          <Button bgColor="#DDD6FE" _hover={{ background: 'none' }} p="0">
+          <Button bgColor="#DDD6FE" _hover={{ background: 'none' }} p="0" onClick={() => navToDetail(item)}>
             {item.name}
           </Button>
         </Box>
