@@ -1,23 +1,43 @@
 import { NextPage } from 'next';
-import { Box, Heading, Flex, Center } from '@chakra-ui/react';
+import { Box, Flex, Spacer } from '@chakra-ui/react';
+import styles from '../styles/Home.module.css';
 import { ServiceLayout } from '@/components/service_layout';
-import { GoogleLoginButton } from '@/components/google_login_button';
-import { useAuth } from '@/context/auth_user.context';
+import { SearchBar } from '@/components/searchBar';
+import TodoItems from '@/components/todoItems';
+import DoneItems from '@/components/doneItems';
 
 const IndexPage: NextPage = function () {
-  const { signInWithGoogle, authUser } = useAuth();
-  console.info(authUser);
   return (
-    <ServiceLayout title="QnA" minH="100vh" backgroundColor="gray.50">
-      <Box maxW="md" mx="auto" pt="10">
-        <img src="/main_logo.svg" alt="메인로고" />
-        <Flex justifyContent="center">
-          <Heading>깃 업로드 된 작업</Heading>
-        </Flex>
+    <ServiceLayout title="todo list" minH="100vh">
+      <Box className={styles.container}>
+        <Box className={styles.searchBar}>
+          <SearchBar />
+        </Box>
+        <Box className={styles.body}>
+          <Box className={styles.iconBox}>
+            <Flex>
+              <Box className={styles.icon}>
+                <img src="/todo.png" alt="todo" />
+              </Box>
+              <Spacer />
+              <Box className={styles.icon}>
+                <img src="/done.png" alt="done" />
+              </Box>
+            </Flex>
+          </Box>
+          <Box className={styles.contentsBox}>
+            <Flex>
+              <Box className={styles.contentsTodo}>
+                <TodoItems />
+              </Box>
+              <Spacer />
+              <Box className={styles.contentsDone}>
+                <DoneItems />
+              </Box>
+            </Flex>
+          </Box>
+        </Box>
       </Box>
-      <Center mt="20px">
-        <GoogleLoginButton onClick={signInWithGoogle} />
-      </Center>
     </ServiceLayout>
   );
 };

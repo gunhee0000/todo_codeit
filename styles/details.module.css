@@ -1,0 +1,19 @@
+.container{
+  width: 996px;
+  padding-top: 20px;
+}
+
+.contents{
+  width: 100%;
+  padding-top: 20px;
+}
+
+
+.noneImg{
+box-sizing: border-box;
+width: 384px;
+height: 311px;
+background: #F8FAFC;
+border: 2px dashed #CBD5E1;
+border-radius: 24px;
+}
