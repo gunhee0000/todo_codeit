@@ -69,10 +69,10 @@ const TodoItems: NextPage = function () {
           gap="16px"
           mt="10px"
         >
-          <Button bgColor="#FFFFFF" _hover="none" p="0" onClick={() => complete(item.id)}>
+          <Button bgColor="#FFFFFF" _hover={{ background: 'none' }} p="0" onClick={() => complete(item.id)}>
             <Img src={item.isCompleted ? '/icon_done.png' : '/icon_todo.png'} alt="아이콘" w="32px" h="32px" />
           </Button>
-          <Button bgColor="#FFFFFF" _hover="none" p="0">
+          <Button bgColor="#FFFFFF" _hover={{ background: 'none' }} p="0">
             {item.name}
           </Button>
         </Box>

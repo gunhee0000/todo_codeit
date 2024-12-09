@@ -28,7 +28,7 @@ export const SearchBar = function () {
         h="56px"
         w="168px"
         bgColor="#FFFFFF"
-        _hover="none"
+        _hover={{ background: 'none' }}
         p="0"
         disabled={title.length === 0}
         onClick={() => AddItem(title)}

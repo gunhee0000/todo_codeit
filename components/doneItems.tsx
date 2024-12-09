@@ -66,10 +66,10 @@ const TodoItems: NextPage = function () {
           mt="10px"
           textDecoration="line-through"
         >
-          <Button bgColor="#DDD6FE" _hover="none" p="0" onClick={() => undo(item.id)}>
+          <Button bgColor="#DDD6FE" _hover={{ background: 'none' }} p="0" onClick={() => undo(item.id)}>
             <Img src={item.isCompleted ? '/icon_done.png' : '/icon_todo.png'} alt="아이콘" w="32px" h="32px" />
           </Button>
-          <Button bgColor="#DDD6FE" _hover="none" p="0">
+          <Button bgColor="#DDD6FE" _hover={{ background: 'none' }} p="0">
             {item.name}
           </Button>
         </Box>
