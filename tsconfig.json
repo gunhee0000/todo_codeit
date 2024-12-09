@@ -28,7 +28,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es5",
-    "incremental": true
+    "incremental": true,
   },
   "exclude": [
     "node_modules",

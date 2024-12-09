@@ -1,20 +1,20 @@
 import axios from 'axios';
 
-export const AddItem = async (title: string) => {
-  if (!title || title.trim().length === 0) {
-    console.error('Invalid title:', title);
-    throw new Error('할 일 제목은 필수입니다.');
+export const ImgUpload = async (id: string, url: string) => {
+  if (!url || url.trim().length === 0) {
+    console.error('Invalid ImageUrl:', url);
+    throw new Error('사진이 없로드 되지 않았습니다.');
   }
 
   const tenantId = 'girin';
   const req: Record<string, any> = {
-    name: title.trim(),
+    url: url.trim(),
   };
 
-  console.log('Request payload:', req); // 요청 데이터 출력
+  console.log('Request payload:', req);
 
   try {
-    const response = await axios.post(`https://assignment-todolist-api.vercel.app/api/${tenantId}/items`, req, {
+    const response = await axios.post(`https://assignment-todolist-api.vercel.app/api/${tenantId}/images/upload`, req, {
       headers: {
         'Content-Type': 'application/json',
       },
