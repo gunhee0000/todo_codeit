@@ -1,5 +1,4 @@
 import { Box, Button, Flex, Img, Spacer, Textarea } from '@chakra-ui/react';
-import axios from 'axios';
 import { useState } from 'react';
 import { AddItem } from '@/pages/api/item.add';
 
