@@ -52,66 +52,57 @@ const Detail: NextPage = function () {
           />
         </Box>
         <Box className={styles.contents}>
-          <Flex>
+          <Box
+            className={styles.noneImg}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            position="relative"
+          >
+            <Img src={imgUrl ? ({ imgUrl } as unknown as string) : '/img_empty.png'} alt="이미지" w="64px" h="64px" />
             <Box
-              className={styles.noneImg}
+              position="absolute"
+              bottom="20px"
+              right="10px"
               display="flex"
               justifyContent="center"
               alignItems="center"
-              position="relative"
             >
-              <Img src={imgUrl ? ({ imgUrl } as unknown as string) : '/img_empty.png'} alt="이미지" w="64px" h="64px" />
-              <Box
-                position="absolute"
-                bottom="20px"
-                right="10px"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Button bgColor="#FFFFFF" _hover={{ background: 'none' }} p="0">
-                  <Img src="/btn_add.png" alt="사진추가버튼" w="64px" h="64px" />
-                </Button>
-              </Box>
+              <Button bgColor="#FFFFFF" _hover={{ background: 'none' }} p="0">
+                <Img src="/btn_add.png" alt="사진추가버튼" w="64px" h="64px" />
+              </Button>
             </Box>
+          </Box>
 
-            <Spacer />
-            <Box className={styles.memo}>
-              <Img src="/memo.png" alt="내용 입력 란" w="588px" h="311px" zIndex="0" position="absolute" />
-              <Box
-                boxSizing="border-box"
-                display="block"
-                zIndex="1"
-                position="relative"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Text
-                  w="588px"
-                  minH="41px"
-                  color="#92400E"
-                  fontWeight="bold"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  MEMO
-                </Text>
-                <Textarea
-                  resize="none"
-                  border="none"
-                  alignContent="center"
-                  w="588px"
-                  minH="270px"
-                  focusBorderColor="transparent"
-                  outline="none"
-                  textAlign="center"
-                  placeholder={contents as string}
-                  value={newMemo}
-                  onChange={(e) => setMemo(e.target.value)}
-                />
-              </Box>
+          <Spacer />
+          <Box className={styles.memo}>
+            <Img src="/memo.png" alt="내용 입력 란" w="588px" h="311px" zIndex="0" position="absolute" />
+            <Box
+              boxSizing="border-box"
+              display="block"
+              zIndex="1"
+              position="relative"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Text w="588px" minH="41px" color="#92400E" fontWeight="bold" alignItems="center" justifyContent="center">
+                MEMO
+              </Text>
+              <Textarea
+                resize="none"
+                border="none"
+                alignContent="center"
+                w="588px"
+                minH="270px"
+                focusBorderColor="transparent"
+                outline="none"
+                textAlign="center"
+                placeholder={contents as string}
+                value={newMemo}
+                onChange={(e) => setMemo(e.target.value)}
+              />
             </Box>
-          </Flex>
+          </Box>
         </Box>
         <Box className={styles.btns}>
           <Flex pt="20px">

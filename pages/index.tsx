@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
-import { Box, Flex, Spacer } from '@chakra-ui/react';
-import styles from '../styles/Home.module.css';
+import { Box, Spacer } from '@chakra-ui/react';
+import styles from '@/styles/Home.module.css';
 import { ServiceLayout } from '@/components/service_layout';
 import { SearchBar } from '@/components/searchBar';
 import TodoItems from '@/components/todoItems';
@@ -14,27 +14,23 @@ const IndexPage: NextPage = function () {
           <SearchBar />
         </Box>
         <Box className={styles.body}>
-          <Box className={styles.iconBox}>
-            <Flex>
-              <Box className={styles.icon}>
-                <img src="/todo.png" alt="todo" />
-              </Box>
-              <Spacer />
-              <Box className={styles.icon}>
-                <img src="/done.png" alt="done" />
-              </Box>
-            </Flex>
+          <Box className={styles.todoBox}>
+            <Box className={styles.icon}>
+              <img src="/todo.png" alt="todo" />
+            </Box>
+            <Box className={styles.contentsTodo}>
+              <TodoItems />
+            </Box>
           </Box>
-          <Box className={styles.contentsBox}>
-            <Flex>
-              <Box className={styles.contentsTodo}>
-                <TodoItems />
-              </Box>
-              <Spacer />
-              <Box className={styles.contentsDone}>
-                <DoneItems />
-              </Box>
-            </Flex>
+          <Spacer />
+          <Box className={styles.doneBox}>
+            <Box className={styles.icon}>
+              <img src="/done.png" alt="done" />
+            </Box>
+            <Spacer />
+            <Box className={styles.contentsDone}>
+              <DoneItems />
+            </Box>
           </Box>
         </Box>
       </Box>

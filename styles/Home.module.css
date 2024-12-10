@@ -10,14 +10,14 @@
 
 .body {
   width: 1200px;
+  display: flex;
 }
 
-.iconBox{
-  width: 100%;
-  height: 50px;
+.todoBox{
+  width: 49%;
 }
 .icon{
-  width: 49%;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   padding-top: 5px;
@@ -27,16 +27,55 @@
   height: 36px;
 }
 
-.contentsBox{
-  width: 100%;
+.doneBox{
+  width: 49%;
 }
 .contentsTodo{
-  width: 49%;
+  width: 100%;
   display: block;
 }
 
 .contentsDone{
-  width: 49%;
+  width: 100%;
   display: block;
 }
 
+.searchBox{
+  width: 100%;
+  height: 56px;
+  margin-top: 18px;
+  display: flex;
+}
+.inputBox{
+  position: relative;
+  max-width: 100%;
+  height: 56px;
+}
+
+.inputBtn{
+  width: 100%;
+}
+
+@media (max-width: 744px) {
+  .searchBar{
+    width: 100%;
+    height: 92px;
+  }
+  .body {
+    width: 100%;
+    display: block;
+  }
+  .todoBox{
+    width: 100%;
+  }
+  .doneBox{
+    width: 100%;
+  }
+
+  .inputBox{
+    position: relative;
+    max-width: 70%;
+    height: 56px;
+  }
+
+}
