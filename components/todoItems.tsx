@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { items } from '@/models/items';
 import { TodoEmpty } from './todoEmpty';
 import { TenantId } from '@/pages/api/ctrl/tenantId';
+import { GetItem } from '@/pages/api/item.get';
 
 const TodoItems: NextPage = function () {
   const [todoItems, setTodoItems] = useState<items[]>([]);
@@ -53,15 +54,16 @@ const TodoItems: NextPage = function () {
     }
   };
 
-  const navToDetail = (item: items) => {
+  const navToDetail = async (item: items) => {
+    const data = await GetItem(item.id);
     router.push({
       pathname: `/${item.name}`,
       query: {
-        id: item.id,
-        title: item.name,
-        contents: item.memo,
-        imgUrl: item.imageUrl,
-        isCompleted: item.isCompleted,
+        id: data.id,
+        title: data.name,
+        contents: data.memo,
+        imgUrl: data.imageUrl,
+        isCompleted: data.isCompleted,
       },
     });
   };

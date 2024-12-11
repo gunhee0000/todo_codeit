@@ -10,6 +10,7 @@ import styles from '@/styles/details.module.css';
 import { DeleteItem } from '@/pages/api/item.delete';
 import { UpdateItem } from '@/pages/api/item.update';
 import { ImgUpload } from '../api/img.upload';
+import { HandleImageUpload } from '@/controller/handleImageUpload';
 
 const Detail: NextPage = function () {
   const router = useRouter();
@@ -25,26 +26,6 @@ const Detail: NextPage = function () {
 
   const [newImage, setNewImage] = useState<string | null>(imgUrl as string | null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-
-      if (file.size > 5 * 1024 * 1024) {
-        alert('이미지 크기는 5MB를 초과할 수 없습니다.');
-        return;
-      }
-
-      try {
-        const uploadedImageUrl = await ImgUpload(id as string, file); // 업로드 함수 호출
-        setNewImage(uploadedImageUrl.imageUrl); // 업로드한 이미지 URL을 상태로 저장
-        alert('이미지 업로드에 성공했습니다.');
-      } catch (err) {
-        alert('이미지 업로드에 실패했습니다.');
-        console.log(err);
-      }
-    }
-  };
 
   const img_sm = { width: '64px', height: '64px' };
   const img_lg = { width: '100%', height: '100%' };
@@ -103,14 +84,19 @@ const Detail: NextPage = function () {
                 p="0"
                 onClick={() => fileInputRef.current?.click()}
               >
-                <Img src="/btn_add.png" alt="사진추가버튼" w="64px" h="64px" bg="none" />
+                <Img src={imgUrl ? 'btn_modify.png' : '/btn_add.png'} alt="사진추가버튼" w="64px" h="64px" bg="none" />
               </Button>
               <input
                 type="file"
                 ref={fileInputRef}
                 style={{ display: 'none' }}
                 accept="image/*"
-                onChange={handleImageUpload}
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    HandleImageUpload(id as string, file, setNewImage);
+                  }
+                }}
               />
             </Box>
           </Box>
