@@ -1,11 +1,15 @@
+/* eslint-disable camelcase */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-alert */
 import { Box, Button, Flex, Img, Spacer, Text, Textarea } from '@chakra-ui/react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ServiceLayout } from '@/components/service_layout';
 import styles from '@/styles/details.module.css';
 import { DeleteItem } from '@/pages/api/item.delete';
 import { UpdateItem } from '@/pages/api/item.update';
+import { ImgUpload } from '../api/img.upload';
 
 const Detail: NextPage = function () {
   const router = useRouter();
@@ -19,6 +23,31 @@ const Detail: NextPage = function () {
 
   const style = isCompleted === 'true' ? doneStyle : todoStyle;
 
+  const [newImage, setNewImage] = useState<string | null>(imgUrl as string | null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      if (file.size > 5 * 1024 * 1024) {
+        alert('이미지 크기는 5MB를 초과할 수 없습니다.');
+        return;
+      }
+
+      try {
+        const uploadedImageUrl = await ImgUpload(id as string, file); // 업로드 함수 호출
+        setNewImage(uploadedImageUrl.imageUrl); // 업로드한 이미지 URL을 상태로 저장
+        alert('이미지 업로드에 성공했습니다.');
+      } catch (err) {
+        alert('이미지 업로드에 실패했습니다.');
+        console.log(err);
+      }
+    }
+  };
+
+  const img_sm = { width: '64px', height: '64px' };
+  const img_lg = { width: '100%', height: '100%' };
   return (
     <ServiceLayout title="detail">
       <Box className={styles.container}>
@@ -47,7 +76,7 @@ const Detail: NextPage = function () {
             whiteSpace="nowrap"
             overflow="hidden"
             value={newName}
-            width={`${Math.max((newName || title || '').length * 25, 100)}px`}
+            width={`${Math.max((newName || title || '').length * 17, 100)}px`}
             onChange={(e) => setName(e.target.value)}
           />
         </Box>
@@ -59,7 +88,7 @@ const Detail: NextPage = function () {
             alignItems="center"
             position="relative"
           >
-            <Img src={imgUrl ? ({ imgUrl } as unknown as string) : '/img_empty.png'} alt="이미지" w="64px" h="64px" />
+            <Img src={newImage || '/img_empty.png'} alt="이미지" {...(newImage ? img_lg : img_sm)} />
             <Box
               position="absolute"
               bottom="20px"
@@ -68,9 +97,21 @@ const Detail: NextPage = function () {
               justifyContent="center"
               alignItems="center"
             >
-              <Button bgColor="#FFFFFF" _hover={{ background: 'none' }} p="0">
-                <Img src="/btn_add.png" alt="사진추가버튼" w="64px" h="64px" />
+              <Button
+                background="none"
+                _hover={{ background: 'none' }}
+                p="0"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Img src="/btn_add.png" alt="사진추가버튼" w="64px" h="64px" bg="none" />
               </Button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
             </Box>
           </Box>
 
@@ -107,23 +148,28 @@ const Detail: NextPage = function () {
         <Box className={styles.btns}>
           <Flex pt="20px">
             <Spacer />
-            <Button bgColor="#FFFFFF" _hover={{ background: 'none' }} p="0">
+            <Button
+              bg="none"
+              _hover={{ background: 'none' }}
+              p="0"
+              onClick={() => {
+                UpdateItem(
+                  id as string,
+                  (newName.length === 0 ? title : newName) as string,
+                  (newMemo.length === 0 ? contents : newMemo) as string,
+                  (newImage?.length === 0 ? imgUrl : newImage) as string,
+                );
+              }}
+            >
               <Img
                 src={newMemo.length === 0 ? '/btn_confirm_deactiv.png' : '/btn_confirm_inactiv.png'}
                 alt="수정 버튼"
                 w="168px"
                 h="56px"
                 mr="16px"
-                onClick={() =>
-                  UpdateItem(
-                    id as string,
-                    (newName.length === 0 ? title : newName) as string,
-                    (newMemo.length === 0 ? contents : newMemo) as string,
-                  )
-                }
               />
             </Button>
-            <Button bgColor="#FFFFFF" _hover={{ background: 'none' }} p="0" onClick={() => DeleteItem(id as string)}>
+            <Button bg="none" _hover={{ background: 'none' }} p="0" onClick={() => DeleteItem(id as string)}>
               <Img src="/btn_delete.png" alt="삭제 버튼" w="168px" h="56px" />
             </Button>
           </Flex>

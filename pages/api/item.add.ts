@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { TenantId } from './ctrl/tenantId';
 
 export const AddItem = async (title: string) => {
   if (!title || title.trim().length === 0) {
@@ -6,7 +7,7 @@ export const AddItem = async (title: string) => {
     throw new Error('할 일 제목은 필수입니다.');
   }
 
-  const tenantId = 'girin';
+  const tenantId = TenantId;
   const req: Record<string, any> = {
     name: title.trim(),
   };

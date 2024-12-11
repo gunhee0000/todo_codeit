@@ -28,7 +28,7 @@ export const SearchBar = function () {
         <Button
           h="100%"
           w="168px"
-          bgColor="#FFFFFF"
+          bg="none"
           _hover={{ background: 'none' }}
           p="0"
           disabled={title.length === 0}
@@ -40,37 +40,3 @@ export const SearchBar = function () {
     </Box>
   );
 };
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <Flex pt="18px" w="100%">
-      <Box position="relative">
-        <Img src="/search.png" alt="할 일 입력란" w="100%" h="56px" pr="10px" position="absolute" zIndex="0" />
-        <Textarea
-          placeholder="할 일을 입력해주세요"
-          w="1016px"
-          minH="56px"
-          resize="none"
-          border="none"
-          alignContent="center"
-          focusBorderColor="transparent"
-          outline="none"
-          overflow="hidden"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </Box>
-      <Spacer />
-      <Button
-        h="56px"
-        w="100%"
-        bgColor="#FFFFFF"
-        _hover={{ background: 'none' }}
-        p="0"
-        disabled={title.length === 0}
-        onClick={() => AddItem(title)}
-      >
-        <Img src={title.length === 0 ? '/btn_add_deactiv_lg.png' : '/btn_add_inactiv_lg.png'} alt="추가버튼_lg" />
-      </Button>
-    </Flex> */
-}

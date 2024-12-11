@@ -1,5 +1,6 @@
 import axios from 'axios';
 import router from 'next/router';
+import { TenantId } from './ctrl/tenantId';
 
 export const DeleteItem = async (id: string) => {
   if (!id) {
@@ -8,7 +9,7 @@ export const DeleteItem = async (id: string) => {
     return;
   }
 
-  const tenantId = 'girin';
+  const tenantId = TenantId;
   try {
     await axios.delete(`https://assignment-todolist-api.vercel.app/api/${tenantId}/items/${id}`);
     // eslint-disable-next-line no-alert

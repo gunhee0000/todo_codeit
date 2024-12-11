@@ -1,28 +1,39 @@
 import axios from 'axios';
+import { TenantId } from './ctrl/tenantId';
 
-export const ImgUpload = async (id: string, url: string) => {
-  if (!url || url.trim().length === 0) {
-    console.error('Invalid ImageUrl:', url);
-    throw new Error('사진이 없로드 되지 않았습니다.');
-  }
+export const ImgUpload = async (id: string, image: File) => {
+  const tenantId = TenantId;
 
-  const tenantId = 'girin';
-  const req: Record<string, any> = {
-    url: url.trim(),
-  };
+  const req = new FormData();
+  req.append('image', image);
 
   console.log('Request payload:', req);
-
   try {
-    const response = await axios.post(`https://assignment-todolist-api.vercel.app/api/${tenantId}/images/upload`, req, {
+    const resp = await axios.post(`https://assignment-todolist-api.vercel.app/api/${tenantId}/images/upload`, req, {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
       },
     });
 
-    window.location.reload();
-    return response.data; // 응답 데이터 반환
+    console.log('Upload response data:', resp.data);
+    const { url } = resp.data;
+
+    if (!url) {
+      throw new Error('이미지 URL이 응답에서 누락되었습니다.');
+    }
+    const response = await axios.patch(
+      `https://assignment-todolist-api.vercel.app/api/${tenantId}/items/${id}`,
+      { imageUrl: url },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    console.log('OK');
+    return response.data;
   } catch (err: any) {
-    console.error('Error occurred:', err.response?.data || err.message); // 에러 로그 출력
+    console.error('Error occurred:', err.response?.data || err.message);
   }
 };

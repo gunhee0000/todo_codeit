@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { items } from '@/models/items';
 import { DoneEmpty } from './doneEmpty';
+import { TenantId } from '@/pages/api/ctrl/tenantId';
 
 const TodoItems: NextPage = function () {
-  const [todoItems, setTodoItems] = useState<items[]>([]); // 상태로 아이템 관리
-  const tenantId = 'girin'; // tenantId 고정
+  const [todoItems, setTodoItems] = useState<items[]>([]);
+  const tenantId = TenantId;
   const router = useRouter();
 
   useEffect(() => {
@@ -40,7 +41,6 @@ const TodoItems: NextPage = function () {
       );
 
       // 완료된 아이템을 제거하고 상태 업데이트
-      setTodoItems((prevItems) => prevItems.filter((item) => item.id !== id));
       window.location.reload();
     } catch (error) {
       console.error(`Failed to update item with id ${id}:`, error);

@@ -5,25 +5,27 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { items } from '@/models/items';
 import { TodoEmpty } from './todoEmpty';
+import { TenantId } from '@/pages/api/ctrl/tenantId';
 
 const TodoItems: NextPage = function () {
-  const [todoItems, setTodoItems] = useState<items[]>([]); // 상태로 아이템 관리
-  const tenantId = 'girin'; // tenantId 고정
+  const [todoItems, setTodoItems] = useState<items[]>([]);
+  const tenantId = TenantId;
   const router = useRouter();
 
   /** 목록 로딩 */
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response: AxiosResponse<items[]> = await axios.get(
+        const resp: AxiosResponse<items[]> = await axios.get(
           `https://assignment-todolist-api.vercel.app/api/${tenantId}/items`,
         );
-        const filteredItems = response.data
+        const filteredItems = resp.data
           .filter((item) => !item.isCompleted) // isCompleted가 false인 데이터만 필터링
           .sort((a, b) => a.id - b.id); // id를 기준으로 오름차순 정렬
         setTodoItems(filteredItems); // 상태에 데이터 저장
+        // console.log(resp.data);
       } catch (error) {
-        console.error('Failed to fetch items:', error);
+        console.error('목록을 불러오지 못했습니다.', error);
       }
     };
 
@@ -44,10 +46,10 @@ const TodoItems: NextPage = function () {
       );
 
       // 완료된 아이템을 제거하고 상태 업데이트
-      setTodoItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      // setTodoItems((prevItems) => prevItems.filter((item) => item.id !== id));
       window.location.reload();
     } catch (error) {
-      console.error(`Failed to update item with id ${id}:`, error);
+      console.error(`정보를 불러오지 못했습니다 id: ${id}:`, error);
     }
   };
 
